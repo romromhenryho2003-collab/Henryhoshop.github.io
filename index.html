@@ -1,297 +1,151 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRO Personal Shop</title>
+<title>PRO SHOP</title>
 
 <style>
-*{box-sizing:border-box}
-body{font-family:Arial;margin:0;background:#f0f2f5}
 
-header{
-background:#1877f2;
+body{
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
+}
+
+/* TOP BAR */
+
+.topbar{
+background:#0a68ff;
 color:white;
-padding:15px 25px;
 display:flex;
-justify-content:space-between;
-align-items:center
+justify-content:flex-end;
+align-items:center;
+gap:15px;
+padding:10px;
 }
 
-.logo{font-size:20px;font-weight:bold}
-
-.social a{color:white;margin-left:15px;text-decoration:none;font-weight:bold}
-
-.container{max-width:1100px;margin:auto;padding:20px}
-
-.profile{
-background:white;
-padding:25px;
-border-radius:12px;
-text-align:center;
-box-shadow:0 2px 10px rgba(0,0,0,0.08)
+.topbar input{
+padding:6px;
+border:none;
+border-radius:4px;
 }
 
-.profile img{
-width:130px;height:130px;border-radius:50%;object-fit:cover;border:4px solid #1877f2
+/* SOCIAL LEFT */
+
+.social{
+position:fixed;
+left:0;
+top:150px;
+display:flex;
+flex-direction:column;
 }
 
-button{padding:10px 15px;border:none;border-radius:6px;cursor:pointer}
+.social a{
+color:white;
+text-decoration:none;
+padding:12px;
+font-weight:bold;
+width:110px;
+}
 
-.edit-btn{background:#1877f2;color:white;margin-top:10px}
-.add-btn{background:#28a745;color:white;margin-top:10px}
+.fb{background:#1877f2;}
+.yt{background:#ff0000;}
+.tt{background:#000;}
+.ig{background:#e4405f;}
 
-.shop-title{margin-top:35px;font-size:22px;font-weight:bold}
+/* COVER */
+
+.cover{
+height:300px;
+background:url("https://picsum.photos/1200/300");
+background-size:cover;
+position:relative;
+}
+
+.avatar{
+width:150px;
+height:150px;
+border-radius:50%;
+border:5px solid white;
+background:url("https://picsum.photos/200");
+background-size:cover;
+position:absolute;
+left:50%;
+bottom:-75px;
+transform:translateX(-50%);
+}
+
+/* PRODUCTS */
 
 .products{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:20px}
-
-.product{
-background:white;padding:15px;border-radius:12px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,0.08)
+margin-top:120px;
+padding:20px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
 }
 
-.product img{width:100%;height:180px;object-fit:cover;border-radius:10px}
+.product{
+background:white;
+padding:10px;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
 
-.price{color:red;font-weight:bold}
+.product img{
+width:100%;
+}
 
-.buy-btn{background:#ff9800;color:white;margin-top:6px}
-.delete-btn{background:#ff4d4d;color:white;margin-top:6px}
+.price{
+color:red;
+font-weight:bold;
+}
 
-.cart-box{
-position:fixed;right:20px;bottom:20px;background:white;padding:15px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.2)
+.old{
+text-decoration:line-through;
+color:gray;
+font-size:14px;
+}
+
+.rating{
+color:orange;
+font-size:14px;
+}
+
+/* CHAT */
+
+.chat{
+position:fixed;
+bottom:20px;
+right:20px;
+}
+
+.chat-box{
+display:none;
+background:white;
+padding:15px;
+width:250px;
+border-radius:8px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+margin-bottom:10px;
 }
 
 .chat-btn{
-position:fixed;left:20px;bottom:20px;background:#1877f2;color:white;padding:12px 18px;border-radius:30px
+background:#0078ff;
+color:white;
+padding:10px 15px;
+border-radius:30px;
+cursor:pointer;
 }
 
-footer{margin-top:50px;background:#222;color:white;padding:25px;text-align:center}
-
-input{width:100%;padding:8px;margin-top:6px;margin-bottom:10px}
-
-.modal{
-display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center
+.chat-box input{
+width:100%;
+padding:5px;
+margin-top:5px;
 }
 
-.modal-content{background:white;padding:20px;border-radius:10px;width:320px}
+/* FOOTER */
 
-.admin-panel{
-background:#fff3cd;padding:10px;border-radius:8px;margin-top:15px;font-size:14px
-}
-
-</style>
-</head>
-
-<body>
-
-<header>
-<div class="logo">My PRO Shop</div>
-
-<div class="social">
-<a id="fb" href="#">Facebook</a>
-<a id="ig" href="#">Instagram</a>
-<a id="tt" href="#">TikTok</a>
-<a id="yt" href="#">YouTube</a>
-</div>
-</header>
-
-<div class="container">
-
-<div class="profile">
-
-<img id="avatar" src="https://via.placeholder.com/130">
-
-<h2 id="name">Tên của bạn</h2>
-
-<p id="bio">Giới thiệu ngắn về bản thân hoặc shop</p>
-
-<input type="file" id="avatarUpload">
-
-<br>
-
-<button class="edit-btn" onclick="editProfile()">Chỉnh sửa hồ sơ</button>
-
-<button class="add-btn" onclick="openProductModal()">Thêm sản phẩm</button>
-
-<div class="admin-panel">
-🔐 Mật khẩu Admin: <b>123456</b> (bạn có thể sửa trong code)
-</div>
-
-</div>
-
-<div class="shop-title">Sản phẩm của tôi</div>
-
-<div class="products" id="productList"></div>
-
-</div>
-
-<footer>
-
-<p id="address">Địa chỉ: Nhập địa chỉ của bạn</p>
-
-<p id="email">Email: example@email.com</p>
-
-<p id="phone">SĐT: 0123 456 789</p>
-
-<button class="edit-btn" onclick="editContact()">Chỉnh sửa thông tin liên hệ</button>
-
-</footer>
-
-<div class="cart-box">
-🛒 Giỏ hàng: <span id="cartCount">0</span>
-</div>
-
-<button class="chat-btn" onclick="chatShop()">💬 Chat</button>
-
-<div class="modal" id="productModal">
-
-<div class="modal-content">
-
-<h3>Thêm sản phẩm</h3>
-
-<input id="pName" placeholder="Tên sản phẩm">
-
-<input id="pPrice" placeholder="Giá sản phẩm">
-
-<input id="pLink" placeholder="Link sản phẩm">
-
-<input type="file" id="pImage">
-
-<button class="add-btn" onclick="addProduct()">Lưu sản phẩm</button>
-
-</div>
-
-</div>
-
-<script>
-
-let ADMIN_PASSWORD = "123456"
-
-let products = JSON.parse(localStorage.getItem('products')) || []
-
-let cart = 0
-
-function saveProducts(){
-localStorage.setItem('products',JSON.stringify(products))
-renderProducts()
-}
-
-function renderProducts(){
-let list=document.getElementById('productList')
-list.innerHTML=''
-
-products.forEach((p,i)=>{
-
-let div=document.createElement('div')
-
-div.className='product'
-
-div.innerHTML=`
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<p class="price">${p.price}</p>
-<a href="${p.link}" target="_blank">Xem chi tiết</a><br>
-<button class="buy-btn" onclick="addToCart()">Thêm vào giỏ</button>
-<button class="delete-btn" onclick="deleteProduct(${i})">Xóa</button>
-`
-
-list.appendChild(div)
-
-})
-}
-
-function addToCart(){
-cart++
-document.getElementById('cartCount').innerText=cart
-}
-
-function openProductModal(){
-let pass = prompt("Nhập mật khẩu Admin")
-
-if(pass !== ADMIN_PASSWORD){
-alert("Sai mật khẩu")
-return
-}
-
-document.getElementById('productModal').style.display='flex'
-}
-
-function addProduct(){
-
-let name=document.getElementById('pName').value
-let price=document.getElementById('pPrice').value
-let link=document.getElementById('pLink').value
-let file=document.getElementById('pImage').files[0]
-
-if(!file) return alert('Hãy chọn ảnh sản phẩm')
-
-let reader=new FileReader()
-
-reader.onload=function(e){
-
-products.push({name,price,link,img:e.target.result})
-
-saveProducts()
-
-document.getElementById('productModal').style.display='none'
-
-}
-
-reader.readAsDataURL(file)
-
-}
-
-function deleteProduct(i){
-products.splice(i,1)
-saveProducts()
-}
-
-function editProfile(){
-
-let name=prompt('Nhập tên mới',document.getElementById('name').innerText)
-let bio=prompt('Nhập mô tả mới',document.getElementById('bio').innerText)
-
-if(name) document.getElementById('name').innerText=name
-if(bio) document.getElementById('bio').innerText=bio
-
-}
-
-function editContact(){
-
-let address=prompt('Nhập địa chỉ')
-let email=prompt('Nhập email')
-let phone=prompt('Nhập số điện thoại')
-
-if(address) document.getElementById('address').innerText='Địa chỉ: '+address
-if(email) document.getElementById('email').innerText='Email: '+email
-if(phone) document.getElementById('phone').innerText='SĐT: '+phone
-
-}
-
-function chatShop(){
-alert("Bạn có thể chat với shop qua Facebook, Zalo hoặc TikTok nhé!")
-}
-
-// upload avatar
-
-document.getElementById('avatarUpload').addEventListener('change',function(){
-
-let file=this.files[0]
-let reader=new FileReader()
-
-reader.onload=function(e){
-
-document.getElementById('avatar').src=e.target.result
-
-}
-
-reader.readAsDataURL(file)
-
-})
-
-renderProducts()
-
-</script>
-
-</body>
-</html>
+footer{
+background:#111;
